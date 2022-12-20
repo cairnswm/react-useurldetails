@@ -53,3 +53,6 @@ The following list of fields are available in the returned details object
 - port: the port used in the url
 - pathname: the path portion of the url as a string
 - protocol: the protocol used to access the page
+
+Function returned is:
+- set: called with a new url to set the href and to update the hook return values

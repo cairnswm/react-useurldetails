@@ -24,6 +24,9 @@ function App() {
       <div>port: {details.port}</div>
       <div>pathname: {details.pathname}</div>
       <div>protocol: {details.protocol}</div>
+      <div>
+        <button onClick={() => details.set("/home")}>Go to Home</button>
+      </div>
     </div>
   );
 }

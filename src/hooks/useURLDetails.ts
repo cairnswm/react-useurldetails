@@ -30,6 +30,7 @@ export const loadURLDetails = (valid: string[]) => {
     port: window.location.port,
     pathname: window.location.pathname,
     protocol: window.location.protocol,
+    set: (url: string) => {},
   };
 };
 
@@ -41,6 +42,7 @@ interface URLDetails {
     port: string,
     pathname: string,
     protocol: string,
+    set: (url: string) => void
 }
 const emptyDetails: URLDetails = {
   href: "",
@@ -50,6 +52,7 @@ const emptyDetails: URLDetails = {
     port: "",
     pathname: "",
     protocol: "",
+    set: (url: string) => {}
 }
 const useURLDetails = (valid: string[]) => {
   const [details, setDetails] = useState<URLDetails>(emptyDetails);
@@ -58,12 +61,20 @@ const useURLDetails = (valid: string[]) => {
   window.addEventListener('popstate', () => {
     setDetails(loadURLDetails(validParams))
   });
+  window.addEventListener("locationchange", () => {
+    setDetails(loadURLDetails(validParams));
+  });
+
+  const set  = (url: string) => {  
+      window.history.pushState(null, "", url);
+      setDetails(loadURLDetails(validParams)); 
+    }
 
   useEffect(() => {
     setDetails(loadURLDetails(validParams))    
   }, [validParams]);
 
-  return details;
+  return { ...details, set};
 }
 
 export default useURLDetails;
